@@ -3,94 +3,91 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Catatan Pengeluaran Harian</title>
+    <title>Catatan Keuangan Harian</title>
     <style>
       :root {
-        --pink-pastel: #ffe4e1;
-        --purple-light: #e6e6fa;
+        --pink-light: #ffe4e1;
         --peach: #ffdab9;
-        --white: #ffffff;
+        --lavender: #e6e6fa;
         --gray-light: #f8f9fa;
-        --text-color: #5d4037;
-      }
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       }
 
       body {
-        background-color: var(--purple-light);
-        color: var(--text-color);
-        line-height: 1.6;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
         padding: 20px;
+        background-color: var(--gray-light);
       }
 
       .container {
-        max-width: 1000px;
+        max-width: 1200px;
         margin: 0 auto;
-        background-color: var(--white);
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
       }
 
       h1 {
         text-align: center;
-        color: #d81b60;
+        color: #333;
         margin-bottom: 30px;
-        font-size: 2em;
       }
 
-      .input-form {
-        background-color: var(--pink-pastel);
+      .form-section {
+        background-color: white;
         padding: 20px;
         border-radius: 10px;
-        margin-bottom: 30px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
       }
 
-      .form-group {
+      .input-group {
         margin-bottom: 15px;
       }
 
       label {
         display: block;
         margin-bottom: 5px;
-        font-weight: 600;
+        color: #666;
       }
 
       input,
       select {
         width: 100%;
-        padding: 10px;
+        padding: 8px;
         border: 1px solid #ddd;
         border-radius: 5px;
-        font-size: 16px;
+        box-sizing: border-box;
       }
 
       button {
-        background-color: #d81b60;
-        color: white;
-        padding: 12px 20px;
+        background-color: var(--peach);
         border: none;
+        padding: 10px 20px;
         border-radius: 5px;
         cursor: pointer;
-        width: 100%;
-        font-size: 16px;
         transition: background-color 0.3s;
       }
 
       button:hover {
-        background-color: #ad1457;
+        background-color: #ffb6c1;
+      }
+
+      .tables-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-top: 30px;
+      }
+
+      .table-container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
       }
 
       table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 20px;
-        background-color: var(--white);
+        margin-top: 10px;
       }
 
       th,
@@ -101,181 +98,213 @@
       }
 
       th {
-        background-color: var(--peach);
-        font-weight: 600;
-      }
-
-      tr:hover {
-        background-color: var(--gray-light);
+        background-color: var(--lavender);
       }
 
       .delete-btn {
-        background-color: #ff4081;
+        background-color: #ffb6c1;
         padding: 5px 10px;
-        font-size: 14px;
+        font-size: 12px;
       }
 
-      .total {
+      .summary {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         margin-top: 20px;
-        text-align: right;
-        font-size: 1.2em;
-        font-weight: 600;
-        color: #d81b60;
+      }
+
+      .summary-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
       }
 
       @media (max-width: 768px) {
+        .tables-section {
+          grid-template-columns: 1fr;
+        }
+
         .container {
-          padding: 15px;
-        }
-
-        table {
-          display: block;
-          overflow-x: auto;
-        }
-
-        th,
-        td {
-          padding: 8px;
-        }
-
-        h1 {
-          font-size: 1.5em;
+          padding: 10px;
         }
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <h1>✨ Catatan Pengeluaran Harian✨</h1>
+      <h1>✨ Catatan Keuangan Harian ✨</h1>
 
-      <div class="input-form">
-        <div class="form-group">
-          <label for="tanggal">Tanggal</label>
-          <input type="date" id="tanggal" required />
-        </div>
-        <div class="form-group">
-          <label for="kategori">Kategori</label>
-          <select id="kategori" required>
-            <option value="">Pilih Kategori</option>
-            <option value="Makanan">Makanan</option>
-            <option value="Belanja">Belanja</option>
-            <option value="Transportasi">Transportasi</option>
-            <option value="Kecantikan">Kecantikan</option>
-            <option value="Kesehatan">Kesehatan</option>
-            <option value="Hiburan">Hiburan</option>
-            <option value="Lainnya">Lainnya</option>
+      <div class="form-section">
+        <div class="input-group">
+          <label>Jenis Transaksi</label>
+          <select id="type">
+            <option value="income">Pemasukan</option>
+            <option value="expense">Pengeluaran</option>
           </select>
         </div>
-        <div class="form-group">
-          <label for="deskripsi">Deskripsi</label>
-          <input type="text" id="deskripsi" placeholder="Masukkan deskripsi pengeluaran" required />
+        <div class="input-group">
+          <label>Tanggal</label>
+          <input type="date" id="date" required />
         </div>
-        <div class="form-group">
-          <label for="nominal">Nominal (Rp)</label>
-          <input type="number" id="nominal" placeholder="Masukkan nominal" required />
+        <div class="input-group">
+          <label>Judul</label>
+          <input type="text" id="category" required />
         </div>
-        <button onclick="tambahPengeluaran()">Tambah Pengeluaran</button>
+        <div class="input-group">
+          <label>Deskripsi</label>
+          <input type="text" id="description" required />
+        </div>
+        <div class="input-group">
+          <label>Nominal</label>
+          <input type="number" id="amount" required />
+        </div>
+        <button onclick="addTransaction()">Tambah Transaksi</button>
       </div>
 
-      <table id="tabelPengeluaran">
-        <thead>
-          <tr>
-            <th>Tanggal</th>
-            <th>Kategori</th>
-            <th>Deskripsi</th>
-            <th>Nominal</th>
-            <th>Aksi</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+      <div class="tables-section">
+        <div class="table-container">
+          <h2>Pemasukan</h2>
+          <table id="incomeTable">
+            <thead>
+              <tr>
+                <th>Tanggal</th>
+                <th>Kategori</th>
+                <th>Deskripsi</th>
+                <th>Nominal</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
 
-      <div class="total" id="totalPengeluaran">Total Pengeluaran: Rp 0</div>
+        <div class="table-container">
+          <h2>Pengeluaran</h2>
+          <table id="expenseTable">
+            <thead>
+              <tr>
+                <th>Tanggal</th>
+                <th>Kategori</th>
+                <th>Deskripsi</th>
+                <th>Nominal</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="summary">
+        <div class="summary-item">
+          <span>Total Pemasukan:</span>
+          <span id="totalIncome">Rp 0</span>
+        </div>
+        <div class="summary-item">
+          <span>Total Pengeluaran:</span>
+          <span id="totalExpense">Rp 0</span>
+        </div>
+        <div class="summary-item">
+          <span>Saldo:</span>
+          <span id="balance">Rp 0</span>
+        </div>
+      </div>
     </div>
 
     <script>
-      let pengeluaranList = JSON.parse(localStorage.getItem('pengeluaran')) || [];
+      let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
 
-      function tambahPengeluaran() {
-        const tanggal = document.getElementById('tanggal').value;
-        const kategori = document.getElementById('kategori').value;
-        const deskripsi = document.getElementById('deskripsi').value;
-        const nominal = document.getElementById('nominal').value;
+      function addTransaction() {
+        const type = document.getElementById('type').value;
+        const date = document.getElementById('date').value;
+        const category = document.getElementById('category').value;
+        const description = document.getElementById('description').value;
+        const amount = parseFloat(document.getElementById('amount').value);
 
-        if (!tanggal || !kategori || !deskripsi || !nominal) {
-          alert('Semua field harus diisi!');
+        if (!date || !category || !description || !amount) {
+          alert('Mohon isi semua field!');
           return;
         }
 
-        const pengeluaran = {
+        const transaction = {
           id: Date.now(),
-          tanggal,
-          kategori,
-          deskripsi,
-          nominal: parseFloat(nominal),
+          type,
+          date,
+          category,
+          description,
+          amount,
         };
 
-        pengeluaranList.push(pengeluaran);
-        simpanData();
-        tampilkanData();
-        resetForm();
+        transactions.push(transaction);
+        saveToLocalStorage();
+        updateTables();
+        updateSummary();
+        clearForm();
       }
 
-      function hapusPengeluaran(id) {
-        pengeluaranList = pengeluaranList.filter((item) => item.id !== id);
-        simpanData();
-        tampilkanData();
+      function deleteTransaction(id) {
+        transactions = transactions.filter((t) => t.id !== id);
+        saveToLocalStorage();
+        updateTables();
+        updateSummary();
       }
 
-      function simpanData() {
-        localStorage.setItem('pengeluaran', JSON.stringify(pengeluaranList));
+      function saveToLocalStorage() {
+        localStorage.setItem('transactions', JSON.stringify(transactions));
       }
 
-      function tampilkanData() {
-        const tbody = document.querySelector('#tabelPengeluaran tbody');
-        tbody.innerHTML = '';
+      function updateTables() {
+        const incomeTable = document.querySelector('#incomeTable tbody');
+        const expenseTable = document.querySelector('#expenseTable tbody');
 
-        pengeluaranList.forEach((item) => {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-                    <td>${formatTanggal(item.tanggal)}</td>
-                    <td>${item.kategori}</td>
-                    <td>${item.deskripsi}</td>
-                    <td>Rp ${formatNominal(item.nominal)}</td>
-                    <td><button class="delete-btn" onclick="hapusPengeluaran(${item.id})">Hapus</button></td>
+        incomeTable.innerHTML = '';
+        expenseTable.innerHTML = '';
+
+        transactions.forEach((transaction) => {
+          const row = `
+                    <tr>
+                        <td>${transaction.date}</td>
+                        <td>${transaction.category}</td>
+                        <td>${transaction.description}</td>
+                        <td>Rp ${transaction.amount.toLocaleString()}</td>
+                        <td>
+                            <button class="delete-btn" onclick="deleteTransaction(${transaction.id})">Hapus</button>
+                        </td>
+                    </tr>
                 `;
-          tbody.appendChild(row);
-        });
 
-        updateTotal();
-      }
-
-      function updateTotal() {
-        const total = pengeluaranList.reduce((sum, item) => sum + item.nominal, 0);
-        document.getElementById('totalPengeluaran').textContent = `Total Pengeluaran: Rp ${formatNominal(total)}`;
-      }
-
-      function formatTanggal(tanggal) {
-        return new Date(tanggal).toLocaleDateString('id-ID', {
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric',
+          if (transaction.type === 'income') {
+            incomeTable.innerHTML += row;
+          } else {
+            expenseTable.innerHTML += row;
+          }
         });
       }
 
-      function formatNominal(nominal) {
-        return nominal.toLocaleString('id-ID');
+      function updateSummary() {
+        const totalIncome = transactions.filter((t) => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
+
+        const totalExpense = transactions.filter((t) => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
+
+        const balance = totalIncome - totalExpense;
+
+        document.getElementById('totalIncome').textContent = `Rp ${totalIncome.toLocaleString()}`;
+        document.getElementById('totalExpense').textContent = `Rp ${totalExpense.toLocaleString()}`;
+        document.getElementById('balance').textContent = `Rp ${balance.toLocaleString()}`;
       }
 
-      function resetForm() {
-        document.getElementById('tanggal').value = '';
-        document.getElementById('kategori').value = '';
-        document.getElementById('deskripsi').value = '';
-        document.getElementById('nominal').value = '';
+      function clearForm() {
+        document.getElementById('date').value = '';
+        document.getElementById('category').value = '';
+        document.getElementById('description').value = '';
+        document.getElementById('amount').value = '';
       }
 
-      // Load data saat halaman dimuat
-      window.onload = tampilkanData;
+      // Initialize tables and summary on page load
+      updateTables();
+      updateSummary();
     </script>
   </body>
 </html>
